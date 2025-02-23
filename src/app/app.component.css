@@ -137,3 +137,92 @@ body::before {
   opacity: 0.3;
 }
 
+/* Tarea ATRASADA - Rojo con parpadeo */
+.status-late {
+  background-color: red;
+  color: white;
+  font-weight: bold;
+  padding: 5px;
+  border-radius: 5px;
+  animation: blink-red 1s infinite alternate;
+}
+
+@keyframes blink-red {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.3;
+  }
+}
+
+/* Tarea PENDIENTE - Amarillo con efecto de atención */
+.status-pending {
+  background-color: orange;
+  color: white;
+  font-weight: bold;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+@keyframes glow-orange {
+  from {
+    box-shadow: 0 0 5px orange;
+  }
+  to {
+    box-shadow: 0 0 15px orange;
+  }
+}
+
+/* Tarea EN PROGRESO - Azul con animación de resplandor */
+.status-in-progress {
+  background-color: rgb(92, 183, 244);
+  color: white;
+  font-weight: bold;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+@keyframes glow-blue {
+  from {
+    box-shadow: 0 0 5px blue;
+  }
+  to {
+    box-shadow: 0 0 15px blue;
+  }
+}
+
+/* Tarea COMPLETADA - Verde estático */
+.status-completed {
+  background-color: green;
+  color: white;
+  font-weight: bold;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+/*estilos para el sweetalert*/
+.hospital-popup {
+  border-radius: 10px;
+  border: 2px solid #4CAF50;
+  background: #f0f8ff;
+}
+
+.hospital-title {
+  color: #3085d6;
+  font-weight: bold;
+}
+
+.hospital-confirm {
+  background-color: #4CAF50 !important;
+  color: white !important;
+}
+
+.hospital-cancel {
+  background-color: #f44336 !important;
+  color: white !important;
+}
+
+
+
+

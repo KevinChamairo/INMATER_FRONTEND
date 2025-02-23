@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { CommonModule } from '@angular/common';
 import { TasksService } from '../app/services/tasks.service';
 import { Tasks } from '../app/model/Tasks';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-root',
@@ -43,17 +44,40 @@ export class TasksComponent implements OnInit {
   // Método para manejar la creación o edición de tareas
   submitTask() {
     if (this.taskForm.valid) {
+      const mensaje = this.editing ? 'actualizada' : 'guardada';
+
+      Swal.fire({
+        title: 'Procesando...',
+        text: 'Guardando los datos...',
+        icon: 'info',
+        allowOutsideClick: false,
+        showConfirmButton: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+
       if (this.editing && this.selectedTaskId !== null) {
-        // Si estamos editando, se llama al servicio de actualización
         this.tasksService.updateTask(this.selectedTaskId, this.taskForm.value).subscribe(() => {
           this.resetForm();
           this.loadTasks();
+          Swal.fire({
+            title: '¡Éxito!',
+            text: `La tarea ha sido ${mensaje} correctamente.`,
+            icon: 'success',
+            confirmButtonColor: '#28a745'
+          });
         });
       } else {
-        // Si estamos creando, se llama al servicio de creación
         this.tasksService.createTask(this.taskForm.value).subscribe(() => {
           this.resetForm();
           this.loadTasks();
+          Swal.fire({
+            title: '¡Éxito!',
+            text: `La tarea ha sido ${mensaje} correctamente.`,
+            icon: 'success',
+            confirmButtonColor: '#28a745'
+          });
         });
       }
     }
@@ -68,14 +92,44 @@ export class TasksComponent implements OnInit {
       due_date: task.due_date ? new Date(task.due_date).toISOString().split('T')[0] : '',
       status_id: task.status_id
     });
+
+    Swal.fire({
+      title: 'Editando tarea',
+      text: 'Puedes modificar los datos y guardar los cambios.',
+      icon: 'info',
+      confirmButtonColor: '#3085d6'
+    });
   }
 
   deleteTask(id: number) {
-    if (confirm('¿Estás seguro de que quieres eliminar esta tarea?')) {
-      this.tasksService.deleteTask(id).subscribe(() => {
-        this.loadTasks();
-      });
-    }
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Esta acción eliminará la tarea de manera permanente.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+      customClass: {
+        popup: 'hospital-popup',
+        title: 'hospital-title',
+        confirmButton: 'hospital-confirm',
+        cancelButton: 'hospital-cancel'
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.tasksService.deleteTask(id).subscribe(() => {
+          this.loadTasks();
+          Swal.fire({
+            title: 'Eliminado',
+            text: 'La tarea ha sido eliminada con éxito.',
+            icon: 'success',
+            confirmButtonColor: '#3085d6'
+          });
+        });
+      }
+    });
   }
 
   resetForm() {

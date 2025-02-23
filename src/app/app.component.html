@@ -28,7 +28,14 @@
                 <span *ngIf="!task.due_date">Sin fecha</span>
                 <span *ngIf="task.due_date">{{ task.due_date | date }}</span>
               </td>
-              <td> {{ task.status_desc | uppercase }} </td>
+              <td [ngClass]="{
+                'status-late': task.status_desc === 'atrasada',
+                'status-pending': task.status_desc === 'pendiente',
+                'status-in-progress': task.status_desc === 'en progreso',
+                'status-completed': task.status_desc === 'completada'
+              }">
+                {{ task.status_desc | uppercase }}
+              </td>
               <td class="d-flex gap-2">
                 <button class="btn btn-update btn-sm" (click)="editTask(task)">Actualizar</button>
                 <button class="btn btn-danger btn-sm" (click)="task.id ? deleteTask(task.id) : null">Eliminar</button>

@@ -1,4 +1,9 @@
+<header class="header">
+  <img src="inmater_logo_2.png" alt="Inmater Logo" class="logo">
+</header>
+
 <div class="row d-flex gap-3">
+  <img src="fondo_clinica.jpg" alt="Inmater Logo" class="fondo">
   <div class="col-8">
     <div class="card">
       <div class="card-header bg-success">
@@ -25,7 +30,7 @@
               </td>
               <td> {{ task.status_desc | uppercase }} </td>
               <td class="d-flex gap-2">
-                <button class="btn btn-warning btn-sm" (click)="editTask(task)">Actualizar</button>
+                <button class="btn btn-update btn-sm" (click)="editTask(task)">Actualizar</button>
                 <button class="btn btn-danger btn-sm" (click)="task.id ? deleteTask(task.id) : null">Eliminar</button>
               </td>
             </tr>

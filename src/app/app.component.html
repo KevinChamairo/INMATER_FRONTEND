@@ -23,7 +23,7 @@
           <tbody>
             <tr *ngFor="let task of tasks; let i = index">
               <td>{{ i + 1 }}</td>
-              <td>{{ task.title }}</td>
+              <td>{{ task.title | decodeText | uppercase }}</td>
               <td>
                 <span *ngIf="!task.due_date">Sin fecha</span>
                 <span *ngIf="task.due_date">{{ task.due_date | date }}</span>

@@ -5,11 +5,12 @@ import { CommonModule } from '@angular/common';
 import { TasksService } from '../app/services/tasks.service';
 import { Tasks } from '../app/model/Tasks';
 import Swal from 'sweetalert2';
+import { DecodeTextPipe } from '../app/pipes/decode-text.pipe';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, ReactiveFormsModule, CommonModule],
+  imports: [RouterOutlet, ReactiveFormsModule, CommonModule, DecodeTextPipe],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
